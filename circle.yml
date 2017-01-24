@@ -9,7 +9,7 @@ test:
     - pwd
     # - mkdir -p $CIRCLE_TEST_REPORTS/phpunit
     - mkdir -p testing123/logs
-    - phpunit --coverage-clover testing123/logs/clover.xml
+    - phpunit --coverage-clover testing123/logs/clover.xml --log-junit testing123/logs/junit.xml tests
      # phpunit --coverage-clover $CIRCLE_TEST_REPORTS/phpunit/clover.xml --log-junit $CIRCLE_TEST_REPORTS/phpunit/junit.xml tests
     # - 'sed -ie "s#<file name=\(.\)$HOME/$CIRCLE_PROJECT_REPONAME#<file name=\1#" $CIRCLE_TEST_REPORTS/phpunit/clover.xml'
     - CODECLIMATE_REPO_TOKEN="1da661ef334966cec135c49162c64f65bc6f621fc6e7f20e190e616238d0a94d" vendor/bin/test-reporter --coverage-report testing123/logs/clover.xml
