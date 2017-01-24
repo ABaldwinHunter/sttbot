@@ -17,7 +17,6 @@ use eidng8\Traits\Wiki\Properties;
  */
 class Parse
 {
-
     use Properties {
         properties as traitProperties;
     }
@@ -80,7 +79,6 @@ class Parse
      */
     protected $content;
 
-
     /**
      * Parse constructor.
      *
@@ -91,7 +89,6 @@ class Parse
         $this->api = $api;
         $this->resetOptions();
     }//end __construct()
-
 
     /**
      * Reset to default options
@@ -111,7 +108,6 @@ class Parse
         ];
     }//end resetOptions()
 
-
     /**
      * If a page is set to a redirect, resolve it
      *
@@ -126,7 +122,6 @@ class Parse
         }
     }//end followRedirects()
 
-
     /**
      * Enable table of contents in output
      *
@@ -140,7 +135,6 @@ class Parse
             unset($this->options[static::$DISABLETOC]);
         }
     }//end toc()
-
 
     /**
      * The page to be retrieved
@@ -164,7 +158,6 @@ class Parse
         }
     }//end page()
 
-
     /**
      * Section to be retrieved
      *
@@ -174,7 +167,6 @@ class Parse
     {
         $this->option(static::$SECTION, $section);
     }//end section()
-
 
     /**
      * Wiki text to parse
@@ -193,20 +185,21 @@ class Parse
         $this->option(static::$TITLE, $title);
     }//end text()
 
-
+    /**
+     * {@inheritdoc}
+     */
     public function properties(
         array $properties = ['wikitext', 'templates', 'links', 'images']
     ): array {
         return $this->traitProperties($properties);
     }//end properties()
 
-
     /**
      * Send the request
      *
      * @param bool $fetch True to fetch new content.
      *
-     * @return string content returned from API
+     * @return array content returned from API
      */
     public function get(bool $fetch = false): ?array
     {
@@ -214,11 +207,11 @@ class Parse
             return $this->content;
         }
 
-        $file = 'parse/'
-            . $this->cacheFileName(
-                $this->option(static::$PAGE),
-                $this->optionsToParameters()
-            );
+        $file = $this->cacheFileName(
+            $this->option(static::$PAGE),
+            $this->optionsToParameters()
+        );
+        $file = "parse/$file";
         $this->content = $this->cache($file, [$this, 'fetch']);
 
         if (empty($this->content)) {
@@ -239,7 +232,6 @@ class Parse
         return $this->content;
     }//end get()
 
-
     /**
      * Flatten links array, with the page name as keys
      *
@@ -259,7 +251,6 @@ class Parse
         return $flattened;
     }//end fetch()
 
-
     /**
      * Flatten images array, with the page name as keys
      *
@@ -276,7 +267,6 @@ class Parse
 
         return $flattened;
     }//end mapLinks()
-
 
     /**
      * Flatten templates array, with the page name as keys
@@ -297,7 +287,14 @@ class Parse
         return $flattened;
     }//end mapImages()
 
-
+    /**
+     * Interpolate variables embedded in templates
+     *
+     * @param string $text
+     * @param array  $vars
+     *
+     * @return null|string
+     */
     private function interpolate(string $text, array $vars): ?string
     {
         $regex = [];
@@ -308,9 +305,9 @@ class Parse
         }//end foreach
 
         $ret = preg_replace($regex, $reps, $text);
+
         return $ret ?? $text;
     }//end mapTemplates()
-
 
     /**
      * Fetch the page from API

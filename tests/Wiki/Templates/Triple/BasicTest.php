@@ -11,9 +11,11 @@ namespace eidng8\Tests\Wiki\Templates\Triple;
 use eidng8\Tests\TestCase;
 use eidng8\Wiki\Templates\Triple;
 
+/**
+ * BasicTest
+ */
 class BasicTest extends TestCase
 {
-
     /**
      * @expectedException \eidng8\Exceptions\EmptyTemplateException
      */
@@ -23,13 +25,11 @@ class BasicTest extends TestCase
         new Triple($text);
     }//end testEmpty()
 
-
     public function testAllQuestionMarks()
     {
         $text = '{{triple|?|??}}';
         $this->assertTrue((new Triple($text))->isEmpty());
     }//end testAllQuestionMarks()
-
 
     public function testSimple()
     {
@@ -47,7 +47,6 @@ class BasicTest extends TestCase
         $this->assertSame(8, $actual->epic());
     }//end testSimple()
 
-
     public function testSimpleOmitFirst()
     {
         $text = '{{triple| | 4 | 8 }}';
@@ -57,7 +56,6 @@ class BasicTest extends TestCase
         $this->assertSame(4, $actual->elite());
         $this->assertSame(8, $actual->epic());
     }//end testSimpleOmitFirst()
-
 
     public function testSimpleOmitSecond()
     {
@@ -69,7 +67,6 @@ class BasicTest extends TestCase
         $this->assertSame(8, $actual->epic());
     }//end testSimpleOmitSecond()
 
-
     public function testSimpleOmitThird()
     {
         $text = '{{triple| 4 | 4}}';
@@ -79,7 +76,6 @@ class BasicTest extends TestCase
         $this->assertSame(4, $actual->elite());
         $this->assertSame(0, $actual->epic());
     }//end testSimpleOmitThird()
-
 
     public function testSimpleOmitFirstAndSecond()
     {
@@ -91,7 +87,6 @@ class BasicTest extends TestCase
         $this->assertSame(8, $actual->epic());
     }//end testSimpleOmitFirstAndSecond()
 
-
     public function testSimpleOmitFirstAndThird()
     {
         $text = '{{triple||4}}';
@@ -101,7 +96,6 @@ class BasicTest extends TestCase
         $this->assertSame(4, $actual->elite());
         $this->assertSame(0, $actual->epic());
     }//end testSimpleOmitFirstAndThird()
-
 
     public function testSimpleOmitSecondAndThird()
     {

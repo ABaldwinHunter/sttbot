@@ -13,9 +13,11 @@ use eidng8\Wiki\Models\Mission;
 use eidng8\Wiki\Templates\CrewList;
 use eidng8\Wiki\Templates\MissionList;
 
+/**
+ * WikiTest
+ */
 class WikiTest extends TestCase
 {
-
     public function testCrew()
     {
         $wiki = $this->newWikiInstance();
@@ -25,7 +27,6 @@ class WikiTest extends TestCase
         $this->assertTrue(is_array($crew->get()));
         $this->assertInstanceOf(CrewMember::class, current($crew->get()));
     }//end testCrew()
-
 
     public function testMissions()
     {

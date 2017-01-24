@@ -11,11 +11,12 @@ namespace eidng8\Tests\Traits\Wiki;
 use eidng8\Tests\TestCase;
 use eidng8\Traits\Wiki\Properties;
 
+/**
+ * PropertiesTest
+ */
 class PropertiesTest extends TestCase
 {
-
     use Properties;
-
 
     public function testAddProperty()
     {
@@ -28,7 +29,6 @@ class PropertiesTest extends TestCase
         $this->assertTrue($this->hasProperty('test-val'));
     }//end hasProperty()
 
-
     public function testRemovePropertyValue()
     {
         $this->options['prop'] = 'test-prop';
@@ -36,7 +36,6 @@ class PropertiesTest extends TestCase
         $this->removeProperty('test-prop');
         $this->assertFalse($this->hasProperty('test-prop'));
     }//end testRemovePropertyValue()
-
 
     public function testRemovePropertyArray()
     {
@@ -47,7 +46,6 @@ class PropertiesTest extends TestCase
         $this->assertFalse($this->hasProperty('test-prop'));
         $this->assertTrue($this->hasProperty('another'));
     }//end testRemovePropertyArray()
-
 
     public function testProperties()
     {

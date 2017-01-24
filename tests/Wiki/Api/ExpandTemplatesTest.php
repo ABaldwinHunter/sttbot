@@ -14,12 +14,13 @@ use eidng8\Wiki\Api\Http;
 use GuzzleHttp\Psr7\Response;
 use Mockery;
 
+/**
+ * ExpandTemplatesTest
+ */
 class ExpandTemplatesTest extends TestCase
 {
-
     // @codingStandardsIgnoreStart
     private $str = '{{:Episode 1 - The Art of War}}{{:Episode 2 - Never Forgive, Never Forget}}{{:Episode 3 - From On High}}{{:Episode 4 - Hostile Takeover}}{{:Episode 5 - Ethical Alternatives}}{{:Episode 6 - Something Rotten}}{{:Episode 7 - When Falcons Clash}}{{:Distress Calls - Delphic Expanse}}{{:Distress Calls - Celestial Temple}}';
-
 
     // @codingStandardsIgnoreEnd
 
@@ -31,7 +32,6 @@ class ExpandTemplatesTest extends TestCase
         $this->assertSame($fetched, $mem);
     }//end testGetCache()
 
-
     public function testGetNull()
     {
         /* @var ExpandTemplates $mock */
@@ -42,7 +42,6 @@ class ExpandTemplatesTest extends TestCase
         );
         $this->assertNull($mock->get($this->str));
     }//end testGetNull()
-
 
     public function testFetch()
     {

@@ -12,14 +12,16 @@ use eidng8\Tests\TestCase;
 use eidng8\Wiki\Templates\InfoBox;
 use eidng8\Wiki\Templates\MissionCost;
 
+/**
+ * InfoBoxTest
+ */
 class InfoBoxTest extends TestCase
 {
-
     public function testEpisodeMission()
     {
         // @codingStandardsIgnoreStart
         $text
-            = <<<EOT
+            = <<<'EOT'
 {{Infobox mission
  |Box title = The Wrong Crowd [E1-M1]
  |Image file = AT-Romulan Chasing Federation.png
@@ -63,7 +65,6 @@ EOT;
         $this->assertFalse($cost->useTicket());
     }//end testEpisodeMission()
 
-
     public function testDistressCallMission()
     {
         // @codingStandardsIgnoreStart
@@ -87,7 +88,6 @@ EOT;
         $this->assertFalse($cost->useTicket());
     }//end testDistressCallMission()
 
-
     public function testCadetChallengeMission()
     {
         // @codingStandardsIgnoreStart
@@ -109,12 +109,11 @@ EOT;
         $this->assertFalse($cost->useChroniton());
     }//end testCadetChallengeMission()
 
-
     public function testResearchFutureHistory()
     {
         // @codingStandardsIgnoreStartc
         $text
-            = <<<EOT
+            = <<<'EOT'
 {{Infobox mission
  |Box title = Researching Future History<br />[E7-M9]
  |Image file = AT-Artifact Discussion.png

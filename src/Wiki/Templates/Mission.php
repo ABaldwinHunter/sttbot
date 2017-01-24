@@ -18,13 +18,12 @@ use eidng8\Wiki\Template;
 
 /**
  * Parse a single mission page
+ *
  * @method MissionModel get()
  */
 class Mission extends Template
 {
-
     private $advanced = false;
-
 
     /**
      * Mission constructor.
@@ -43,7 +42,9 @@ class Mission extends Template
         parent::__construct($wikiText, $name, $options);
     }//end __construct()
 
-
+    /**
+     * {@inheritdoc}
+     */
     public function parse(): MissionModel
     {
         $this->found = [];
@@ -56,9 +57,9 @@ class Mission extends Template
             );
         }
         $this->found['info'] = $info;
+
         return $this->found = $this->createModel();
     }//end parse()
-
 
     /**
      * Process info box
@@ -71,9 +72,9 @@ class Mission extends Template
     {
         $info = new InfoBox($mission);
         $this->name = $info->name();
+
         return $info;
     }//end parseInfoBox()
-
 
     /**
      * Process mission walk through
@@ -91,7 +92,6 @@ class Mission extends Template
 
         return compact('intro', 'steps');
     }//end parseWalkThru()
-
 
     /**
      * Process mission walk through header
@@ -133,7 +133,6 @@ class Mission extends Template
         return $intro;
     }//end parseMWHead()
 
-
     /**
      * Process mission steps
      *
@@ -152,7 +151,6 @@ class Mission extends Template
 
         return $steps;
     }//end parseMWalk()
-
 
     /**
      * Process a mission step
@@ -277,7 +275,15 @@ class Mission extends Template
         return $props;
     }//end parseStep()
 
-
+    /**
+     * Parse mission step properties
+     *
+     * @param string $key
+     * @param string $values
+     * @param string $advValues
+     *
+     * @return array|Triple|mixed|null
+     */
     public function parseStepProp(
         string $key,
         string $values,
@@ -358,7 +364,6 @@ class Mission extends Template
         return $return;
     }//end parseStepProp()
 
-
     /**
      * Create a mission model
      *
@@ -413,16 +418,25 @@ class Mission extends Template
         }
 
         $this->validateModel($model);
+
         return $model;
     }//end createModel()
 
-
+    /**
+     * @param MissionModel $model
+     *
+     * @return bool
+     */
     public function validateModel(MissionModel $model): bool
     {
         return $model->validate();
     }//end loadReqAndBonusModel()
 
-
+    /**
+     * @param Triple|null $values
+     *
+     * @return ReqAndBonus|null
+     */
     public function loadReqAndBonusModel(Triple $values = null)
     {
         if (empty($values)) {
@@ -432,6 +446,7 @@ class Mission extends Template
         $model = new ReqAndBonus();
         $model->name($values->name());
         $model->set($values->get());
+
         return $model;
     }//end validateModel()
 }//end class

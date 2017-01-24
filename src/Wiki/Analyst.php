@@ -20,7 +20,6 @@ use eidng8\Wiki\Templates\MissionList;
  */
 final class Analyst
 {
-
     /**
      * @var MissionList
      */
@@ -38,14 +37,18 @@ final class Analyst
      */
     private $bestCrew = [];
 
-
+    /**
+     * Analyst constructor.
+     *
+     * @param MissionList $missions
+     * @param CrewList    $crew
+     */
     public function __construct(MissionList $missions, CrewList $crew)
     {
         $this->missions = $missions;
         $this->crew = $crew;
         // $this->crewStats();
     }//end __construct()
-
 
     /**
      * Best crew combination
@@ -56,7 +59,6 @@ final class Analyst
     {
         return $this->bestCrew;
     }//end rateStep()
-
 
     /**
      * Calculate & rates each crew according to their usefulness in missions,
@@ -71,7 +73,7 @@ final class Analyst
         /* @noinspection PhpUnusedParameterInspection */
         $this->missions->eachAway(
             function (Mission $mission, $index, $episode, string $type) {
-                foreach ($mission->steps as $idx => $step) {
+                foreach ($mission->steps as $step) {
                     $this->rateStep($step, $type);
                 }//end foreach
             }
@@ -80,7 +82,6 @@ final class Analyst
         $elapsed = microtime(true) - $start;
         Log::info("cross rating calculated in {$elapsed}s");
     }//end getBestCrew()
-
 
     /**
      * Calculates crew rating to the given step
@@ -106,7 +107,6 @@ final class Analyst
         // assert(is_array($step['crew']));
     }//end crossRating()
 
-
     /**
      * Calculates a crew member's rating to the given cadet challenge step
      *
@@ -131,7 +131,6 @@ final class Analyst
         //     $step->addUnlockCrew($member);
         // }
     }//end bestCrew()
-
 
     /**
      * Calculates a crew member's rating to the given step
@@ -163,7 +162,6 @@ final class Analyst
         }
     }
 
-
     /**
      * Find the best crew combination, must be called after `crossRating()`
      */
@@ -182,7 +180,6 @@ final class Analyst
         $elapsed = microtime(true) - $start;
         Log::info("best crew calculated in {$elapsed}s");
     }
-
 
     /**
      * Find the best crew combination of the given step
@@ -254,7 +251,6 @@ final class Analyst
             = $member;
     }//end stepBestCrew()
 
-
     /**
      * @param CrewMember[] $crew
      * @param string[]     $skills
@@ -279,16 +275,18 @@ final class Analyst
                     if (empty($prev[$member->stars])) {
                         $prev[$member->stars]
                             = [$member, max($member->skills[$skill]), $lock];
+
                         return $prev;
                     }
                     // as all pass-in crew member are either "critical" or "pass",
                     // we don't need to care about if they have bonus traits or not
                     $max = max($member->skills[$skill]);
                     if (($lock || empty($prev[$member->stars][2])
-                            || !$prev[$member->stars][2])
+                         || !$prev[$member->stars][2])
                         && $max > $prev[$member->stars][1]
                     ) {
                         $prev[$member->stars] = [$member, $max, $lock];
+
                         return $prev;
                     }
                 }//end foreach
@@ -298,7 +296,6 @@ final class Analyst
         );
     }//end best()
 
-
     /**
      * @return MissionList
      */
@@ -306,7 +303,6 @@ final class Analyst
     {
         return $this->missions;
     }//end rateMissionCrew()
-
 
     /**
      * @return CrewList

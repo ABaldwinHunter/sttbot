@@ -15,38 +15,25 @@ use eidng8\Wiki\Models\MissionStep;
 use eidng8\Wiki\Models\ReqAndBonus;
 use eidng8\Wiki\Templates\MissionList;
 
+/**
+ * MissionListTest
+ */
 class MissionListTest extends TestCase
 {
-
     private $wiki;
 
-
+    /**
+     * MissionListTest constructor.
+     */
     public function __construct()
     {
         parent::__construct();
         $this->wiki = $this->newWikiInstance();
     }//end __construct()
 
-    // public function testGetNoLock()
-    // {
-    //     $api = $this->newApiInstance();
-    //     $missions = new MissionList(
-    //         $api->parse(),
-    //         $api->query(),
-    //         $api->expandTemplates()
-    //     );
-    //     $missions->fetch();
-    //     $list = $missions->get();
-    //     $this->assertTrue(is_array($list));
-    //     $this->assertTrue(is_string(array_keys($list)[0]));
-    //     $this->assertTrue(is_array(array_values($list)[0]));
-    //
-    //     $mission = $missions->byName('Baited Hook');
-    //     $this->assertSame(71, $mission->steps[0]->traits[0]->normal());
-    //     $this->assertSame(0, $mission->steps[0]->traits[0]->elite());
-    //     $this->assertSame(0, $mission->steps[0]->traits[0]->epic());
-    // }//end testGetHasLock()
-
+    /**
+     * @return MissionList
+     */
     public function testCreate()
     {
         $api = $this->newApiInstance();
@@ -56,9 +43,9 @@ class MissionListTest extends TestCase
             $api->expandTemplates()
         );
         $this->assertNotEmpty($missions->fetch());
+
         return $missions;
     }//end testCreate()
-
 
     /**
      * @depends testCreate
@@ -95,7 +82,6 @@ class MissionListTest extends TestCase
         );
     }//end testGetHasLock()
 
-
     /**
      * @depends testCreate
      *
@@ -120,7 +106,6 @@ class MissionListTest extends TestCase
         );
     }//end testNameShouldNotBeTemplate()
 
-
     /**
      * @depends testCreate
      *
@@ -142,7 +127,9 @@ class MissionListTest extends TestCase
         $this->checkCadetStep5($model);
     }//end testCadet()
 
-
+    /**
+     * @param Mission $model
+     */
     private function checkCadetBasic(Mission $model)
     {
         $this->assertInstanceOf(Mission::class, $model);
@@ -173,7 +160,9 @@ class MissionListTest extends TestCase
         $this->assertCount(5, $model->steps);
     }//end testCadetAdv()
 
-
+    /**
+     * @param Mission $model
+     */
     private function checkCadetStep1(Mission $model)
     {
         $step = $model->steps[0];
@@ -204,7 +193,9 @@ class MissionListTest extends TestCase
         );
     }//end testExport()
 
-
+    /**
+     * @param Mission $model
+     */
     private function checkCadetStep2(Mission $model)
     {
         $step = $model->steps[1];
@@ -225,7 +216,9 @@ class MissionListTest extends TestCase
         $this->assertNull($step->traits[0]);
     }//end checkCadetBasic()
 
-
+    /**
+     * @param Mission $model
+     */
     private function checkCadetStep3(Mission $model)
     {
         $step = $model->steps[2];
@@ -278,7 +271,9 @@ class MissionListTest extends TestCase
         );
     }//end testCadetStep1()
 
-
+    /**
+     * @param Mission $model
+     */
     private function checkCadetStep4(Mission $model)
     {
         $step = $model->steps[3];
@@ -317,7 +312,9 @@ class MissionListTest extends TestCase
         );
     }//end testCadetStep2()
 
-
+    /**
+     * @param Mission $model
+     */
     private function checkCadetStep5(Mission $model)
     {
         $step = $model->steps[4];
@@ -348,7 +345,6 @@ class MissionListTest extends TestCase
         );
     }//end testCadetStep3()
 
-
     /**
      * @depends testCreate
      *
@@ -370,7 +366,9 @@ class MissionListTest extends TestCase
         $this->checkCadetAdvStep5($model);
     }//end testCadetStep4()
 
-
+    /**
+     * @param Mission $model
+     */
     private function checkCadetAdvStep1(Mission $model)
     {
         $step = $model->steps[0];
@@ -401,7 +399,9 @@ class MissionListTest extends TestCase
         );
     }//end testCadetStep5()
 
-
+    /**
+     * @param Mission $model
+     */
     private function checkCadetAdvStep2(Mission $model)
     {
         $step = $model->steps[1];
@@ -422,7 +422,9 @@ class MissionListTest extends TestCase
         $this->assertNull($step->traits[0]);
     }//end testCadetAdvStep1()
 
-
+    /**
+     * @param Mission $model
+     */
     private function checkCadetAdvStep3(Mission $model)
     {
         $step = $model->steps[2];
@@ -475,7 +477,9 @@ class MissionListTest extends TestCase
         );
     }//end testCadetAdvStep2()
 
-
+    /**
+     * @param Mission $model
+     */
     private function checkCadetAdvStep4(Mission $model)
     {
         $step = $model->steps[3];
@@ -514,7 +518,9 @@ class MissionListTest extends TestCase
         );
     }//end testCadetAdvStep3()
 
-
+    /**
+     * @param Mission $model
+     */
     private function checkCadetAdvStep5(Mission $model)
     {
         $step = $model->steps[4];
@@ -545,7 +551,6 @@ class MissionListTest extends TestCase
         );
     }//end testCadetAdvStep4()
 
-
     public function testExport()
     {
         $missions = $this->wiki->missions()->export();
@@ -563,7 +568,10 @@ class MissionListTest extends TestCase
         }//end foreach
     }//end testCadetAdvStep5()
 
-
+    /**
+     * @param array $mission
+     * @param int   $idx
+     */
     private function checkExportedMission(array $mission, int $idx)
     {
         $this->checkExportedMissionName($mission, $idx);
@@ -581,7 +589,10 @@ class MissionListTest extends TestCase
         $this->checkExportedMissionSteps($mission);
     }//end checkExportedMission()
 
-
+    /**
+     * @param array $mission
+     * @param int   $idx
+     */
     private function checkExportedMissionName(array $mission, int $idx)
     {
         $this->assertArrayHasKey('name', $mission);
@@ -596,7 +607,9 @@ class MissionListTest extends TestCase
         );
     }//end checkExportedMissionName()
 
-
+    /**
+     * @param array $mission
+     */
     private function checkExportedMissionType(array $mission)
     {
         $this->assertArrayHasKey('type', $mission);
@@ -617,7 +630,9 @@ class MissionListTest extends TestCase
         );
     }//end checkExportedMissionType()
 
-
+    /**
+     * @param array $mission
+     */
     private function checkExportedMissionCost(array $mission)
     {
         $this->assertArrayHasKey(
@@ -648,7 +663,9 @@ class MissionListTest extends TestCase
         }//end foreach
     }//end checkExportedMissionCost()
 
-
+    /**
+     * @param array $mission
+     */
     private function checkExportedMissionRequirements(array $mission)
     {
         $this->assertArrayHasKey(
@@ -688,36 +705,9 @@ class MissionListTest extends TestCase
         }
     }//end checkExportedMissionRequirements()
 
-    // private function checkExportedMissionBonus(/*array $mission*/)
-    // {
-    //     $this->assertArrayHasKey(
-    //         'bonus',
-    //         $mission,
-    //         "$mission[name] should has 'bonus'"
-    //     );
-    //     $this->assertInternalType(
-    //         'array',
-    //         $mission['bonus'],
-    //         "$mission[name] 'bonus' should be array"
-    //     );
-    //     $this->assertNotEmpty(
-    //         $mission['bonus'],
-    //         "$mission[name] 'bonus' should not be empty"
-    //     );
-    //     foreach ($mission['bonus'] as $idx => $bonus) {
-    //         $this->assertInternalType(
-    //             'integer',
-    //             $bonus,
-    //             "$mission[name] 'bonus[$idx]' should be integer"
-    //         );
-    //     }//end foreach
-    //     $this->assertSame(
-    //         count($mission['cost']),
-    //         count($mission['bonus']),
-    //         "$mission[name] cost & bonus should have same count"
-    //     );
-    // }//end checkExportedMissionBonus()
-
+    /**
+     * @param array $mission
+     */
     private function checkExportedMissionSteps(array $mission)
     {
         $this->assertArrayHasKey(

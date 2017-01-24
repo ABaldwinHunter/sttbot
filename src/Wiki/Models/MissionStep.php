@@ -8,9 +8,11 @@
 
 namespace eidng8\Wiki\Models;
 
+/**
+ * Mission step model
+ */
 class MissionStep extends Model
 {
-
     /**
      * @var ReqAndBonus[]
      */
@@ -31,7 +33,9 @@ class MissionStep extends Model
      */
     protected $crew;
 
-
+    /**
+     * @return bool
+     */
     public function validate(): bool
     {
         // check skill requirements
@@ -47,7 +51,6 @@ class MissionStep extends Model
 
         return true;
     }//end validate()
-
 
     /**
      * Converts the instance to array
@@ -75,7 +78,6 @@ class MissionStep extends Model
         ];
     }
 
-
     /**
      * @return string[]
      */
@@ -91,7 +93,11 @@ class MissionStep extends Model
         return $skills;
     }//end allSkills()
 
-
+    /**
+     * Returns all bonus traits
+     *
+     * @return array
+     */
     public function allTraits(): array
     {
         if (empty($this->traits)) {
@@ -105,7 +111,11 @@ class MissionStep extends Model
         return $traits;
     }//end allSkills()
 
-
+    /**
+     * Finds the max bonus
+     *
+     * @return int
+     */
     public function maxBonus(): int
     {
         if (empty($this->traits)) {
@@ -115,7 +125,6 @@ class MissionStep extends Model
         return max($this->traits[0]->get());
     }//end maxBonus()
 
-
     /**
      * @return CrewMember[]
      */
@@ -123,7 +132,6 @@ class MissionStep extends Model
     {
         return $this->crew;
     }
-
 
     /**
      * @param array $crew
@@ -133,7 +141,6 @@ class MissionStep extends Model
         $this->crew = $crew;
     }
 
-
     /**
      * @return array
      */
@@ -141,7 +148,6 @@ class MissionStep extends Model
     {
         return $this->crew['pass'];
     }
-
 
     /**
      * @return array
@@ -151,7 +157,6 @@ class MissionStep extends Model
         return $this->crew['critical'];
     }
 
-
     /**
      * @return array
      */
@@ -159,7 +164,6 @@ class MissionStep extends Model
     {
         return $this->crew['unlock'];
     }
-
 
     /**
      * @param CrewMember $crew
@@ -169,7 +173,6 @@ class MissionStep extends Model
         $this->crew['pass'][] = $crew;
     }
 
-
     /**
      * @param CrewMember $crew
      */
@@ -177,7 +180,6 @@ class MissionStep extends Model
     {
         $this->crew['critical'][] = $crew;
     }
-
 
     /**
      * @param CrewMember $crew

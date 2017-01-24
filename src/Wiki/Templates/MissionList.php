@@ -12,9 +12,11 @@ use eidng8\Wiki\Models\Mission as MissionModel;
 use eidng8\Wiki\Models\Skills;
 use eidng8\Wiki\WikiBase;
 
+/**
+ * Parse all missions
+ */
 class MissionList extends WikiBase
 {
-
     /**
      * List of all missions, organized by episodes/cadet
      *
@@ -27,14 +29,12 @@ class MissionList extends WikiBase
      */
     protected $models = null;
 
-
     /**
      * Return mission list
      *
      * @param string $what
      *
      * @return array|\eidng8\Wiki\Models\Mission[][][]
-     * @internal param string $type
      */
     public function get(string $what = null): array
     {
@@ -56,7 +56,6 @@ class MissionList extends WikiBase
 
         return empty($what) ? $this->models : $this->models[$what];
     }//end get()
-
 
     /**
      * Iterate through all away team missions and call the given function.
@@ -88,27 +87,27 @@ class MissionList extends WikiBase
         }//end foreach
     }//end each()
 
-
     /**
      * Get mission by name
      *
-     * @param string $name
+     * @param string $name   Name of the mission, case insensitive
+     * @param string $epName Name of episode, case insensitive
      *
-     * @return MissionModel
+     * @return MissionModel|null
      */
     public function byName(string $name, string $epName = null): ?MissionModel
     {
         $search = trim(strtolower($name));
         $epSearch = trim(strtolower($epName));
-        foreach ($this->list as $type => $episodes) {
-            foreach ($episodes as $episode => $missions) {
-                foreach ($missions as $index => $mission) {
+        foreach ($this->list as $episodes) {
+            foreach ($episodes as $missions) {
+                foreach ($missions as $mission) {
                     /* @var Mission $mission */
                     $model = $mission->get();
                     if ($search == strtolower($model->name)
                         && (empty($epSearch)
                             || strtolower($epSearch)
-                            == strtolower($model->episode))
+                               == strtolower($model->episode))
                     ) {
                         return $model;
                     }
@@ -117,7 +116,6 @@ class MissionList extends WikiBase
         }//end foreach
         return null;
     }//end each()
-
 
     /**
      * Fetch all missions from server and process them to models
@@ -133,9 +131,9 @@ class MissionList extends WikiBase
 
         $this->parseEpisodes($templates);
         $this->fetchCadetCrew($cadets, $templates['cadet']);
+
         return $this->list = $templates;
     }//end each()
-
 
     /**
      * Fetch the list through API
@@ -165,7 +163,6 @@ class MissionList extends WikiBase
 
         return compact('episodes', 'cadet');
     }//end get()
-
 
     /**
      * Fetch templates through API
@@ -203,7 +200,6 @@ class MissionList extends WikiBase
         return $matches[1];
     }//end fetchMissionList()
 
-
     /**
      * Parse all episodes
      *
@@ -217,7 +213,6 @@ class MissionList extends WikiBase
             }//end foreach
         }//end foreach
     }//end fetchTemplates()
-
 
     /**
      * Parse a episode wiki text
@@ -233,15 +228,16 @@ class MissionList extends WikiBase
         $missions = array_map(
             function ($mission) {
                 $this->parse->page($mission);
+
                 return $this->parse->get(true)['wikitext']['*'];
             },
             $missions[3]
         );
 
         preg_match('/^=+\[+([^\[\]]+)]+=+/', $episode, $matches);
+
         return $this->parseMissions($missions, $matches[1] ?? '');
     }//end fetchCadetCrew()
-
 
     /**
      * Process missions wiki text
@@ -269,7 +265,12 @@ class MissionList extends WikiBase
         return $info;
     }//end parseEpisodes()
 
-
+    /**
+     * Fetch all cadet mission eligible crew
+     *
+     * @param array $names
+     * @param array $cadet
+     */
     public function fetchCadetCrew(array $names, array $cadet)
     {
         foreach ($cadet as $episode => $missions) {
@@ -290,12 +291,10 @@ class MissionList extends WikiBase
         }//end foreach
     }//end parseEpisode()
 
-
     /**
      * Export all missions as array
-
-*
-*@return array
+     *
+     * @return array
      */
     public function export(): array
     {
@@ -306,6 +305,7 @@ class MissionList extends WikiBase
                 $mission = $mission->toArray();
                 if (MissionModel::SPACE_BATTLE === $mission['type']) {
                     $missions[] = $mission;
+
                     return;
                 }
 
@@ -358,9 +358,9 @@ class MissionList extends WikiBase
                 $missions[] = $mission;
             }
         );
+
         return [$episodes, $missions];
     }
-
 
     /**
      * Iterate through all missions and call the given function.

@@ -12,9 +12,11 @@ use eidng8\Log\Log;
 use eidng8\Tests\TestCase;
 use eidng8\Wiki\Templates\MissionCost;
 
+/**
+ * MissionCostTest
+ */
 class MissionCostTest extends TestCase
 {
-
     public function testTriple()
     {
         $text = '{{currency|CRN}} {{triple| 4 | 4 | 8 }}';
@@ -25,7 +27,6 @@ class MissionCostTest extends TestCase
         $this->assertSame(4, $cost->elite());
         $this->assertSame(8, $cost->epic());
     }//end testTriple()
-
 
     public function testSlashed()
     {
@@ -38,7 +39,6 @@ class MissionCostTest extends TestCase
         $this->assertSame(8, $cost->epic());
     }//end testSlashed()
 
-
     public function testTicket()
     {
         $text = '{{currency|tik}} 1';
@@ -48,14 +48,13 @@ class MissionCostTest extends TestCase
         $this->assertSame(1, $cost->ticket());
     }//end testTicket()
 
-
     public function testEmpty()
     {
         Log::forTest();
         $this->assertNull(MissionCost::load(''));
         $this->assertTrue(
-            Log::$testErrorOutput->hasNoticeThatMatches('/Empty template/'),
-            'Empty mission cost template should raise warning.'
+            Log::$testOutput->hasNoticeThatMatches('/Empty template/'),
+            'Empty mission cost template should raise notice.'
         );
     }//end testEmpty()
 }//end class

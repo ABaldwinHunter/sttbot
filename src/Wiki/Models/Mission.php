@@ -11,33 +11,35 @@ namespace eidng8\Wiki\Models;
 use eidng8\Contracts\Hyperlink;
 use eidng8\Log\Log;
 
+/**
+ * Mission model
+ */
 class Mission extends Model implements Hyperlink
 {
-
     /**
      * Away team mission
      */
-    const AWAY_TEAM = 1;
+    public const AWAY_TEAM = 1;
 
     /**
      * Elite difficulty
      */
-    const ELITE = 1;
+    public const ELITE = 1;
 
     /**
      * Epic difficulty
      */
-    const EPIC = 2;
+    public const EPIC = 2;
 
     /**
      * Normal difficulty
      */
-    const NORMAL = 0;
+    public const NORMAL = 0;
 
     /**
      * Space battle mission
      */
-    const SPACE_BATTLE = 2;
+    public const SPACE_BATTLE = 2;
 
     /**
      * Wiki page URI
@@ -87,7 +89,9 @@ class Mission extends Model implements Hyperlink
      */
     public $steps;
 
-
+    /**
+     * @return bool
+     */
     public function validate(): bool
     {
         $result = true;
@@ -95,6 +99,7 @@ class Mission extends Model implements Hyperlink
         // validate cost
         if (empty($this->cost) || !($this->cost instanceof MissionCost)) {
             Log::warn("Mission [ $this->name ] has no cost.");
+
             return false;
         }
 
@@ -103,6 +108,7 @@ class Mission extends Model implements Hyperlink
             // check missions steps
             if (empty($this->steps) || !is_array($this->steps)) {
                 Log::warn("Mission [ $this->name ] has no step.", [$this]);
+
                 return false;
             }
 
@@ -126,7 +132,6 @@ class Mission extends Model implements Hyperlink
         return $result;
     }//end validate()
 
-
     /**
      * URI of the resource, related to site root, without leading slash
      *
@@ -137,7 +142,6 @@ class Mission extends Model implements Hyperlink
         return $this->page();
     }//end uri()
 
-
     /**
      * Page name of the resource
      *
@@ -147,7 +151,6 @@ class Mission extends Model implements Hyperlink
     {
         return $this->page;
     }//end page()
-
 
     /**
      * Converts the instance to array

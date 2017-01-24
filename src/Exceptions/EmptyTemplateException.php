@@ -8,7 +8,9 @@
 
 namespace eidng8\Exceptions;
 
+/**
+ * Empty Wiki template exception
+ */
 class EmptyTemplateException extends \Exception
 {
-
 }//end class

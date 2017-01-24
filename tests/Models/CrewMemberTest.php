@@ -11,9 +11,11 @@ namespace eidng8\Tests\Models;
 use eidng8\Tests\TestCase;
 use eidng8\Wiki\Models\CrewMember;
 
+/**
+ * CrewMemberTest
+ */
 class CrewMemberTest extends TestCase
 {
-
     /**
      * test data
      *
@@ -27,7 +29,6 @@ class CrewMemberTest extends TestCase
      * @var CrewMember
      */
     private static $model;
-
 
     public static function setUpBeforeClass()
     {
@@ -48,7 +49,6 @@ class CrewMemberTest extends TestCase
         //     static::$model[$index] = $item;
         // }//end foreach
     }
-
 
     public function testModel()
     {
@@ -79,12 +79,12 @@ class CrewMemberTest extends TestCase
 
         $this->assertSame(
             [
-                "Changeling",
-                "Dominion",
-                "Starfleet",
-                "Doctor",
-                "Undercover Operative",
-                "Saboteur}}",
+                'Changeling',
+                'Dominion',
+                'Starfleet',
+                'Doctor',
+                'Undercover Operative',
+                'Saboteur}}',
             ],
             static::$model['traits']
         );
@@ -96,12 +96,10 @@ class CrewMemberTest extends TestCase
         $this->assertSame(123, static::$model->getRating());
     }//end testModel()
 
-
     public function testToArray()
     {
         $this->assertEquals(static::$data, static::$model->toArray());
     }//end testToArray()
-
 
     public function testUnset()
     {
@@ -124,7 +122,6 @@ class CrewMemberTest extends TestCase
         $this->assertTrue(isset($model['stars']));
         $this->assertNull($model['STARS']);
     }//end testUnset()
-
 
     public function testJsonEncode()
     {

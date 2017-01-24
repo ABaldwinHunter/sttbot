@@ -15,6 +15,7 @@ use eidng8\Wiki\Template;
 
 /**
  * Mission cost template parser
+ *
  * @method void set(string $level, int $cost)
  * @method int|void normal(int $cost = null)
  * @method int|void elite(int $cost = null)
@@ -25,8 +26,7 @@ use eidng8\Wiki\Template;
  */
 class MissionCost extends Template
 {
-
-    const TICKET = 'ticket';
+    public const TICKET = 'ticket';
 
     /**
      * @var MissionCostModel
@@ -44,7 +44,6 @@ class MissionCost extends Template
         $this->found = $wikiText;
         $this->parse();
     }
-
 
     /**
      * Parse mission cost string
@@ -87,7 +86,6 @@ class MissionCost extends Template
         }
     }//end parse()
 
-
     /**
      * @return MissionCostModel
      */
@@ -96,7 +94,9 @@ class MissionCost extends Template
         return $this->model;
     }//end get()
 
-
+    /**
+     * {@inheritdoc}
+     */
     public function __call($name, $arguments)
     {
         return call_user_func_array([$this->model, $name], $arguments);

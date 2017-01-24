@@ -11,11 +11,12 @@ namespace eidng8\Tests\Traits\Wiki;
 use eidng8\Tests\TestCase;
 use eidng8\Traits\Wiki\Request;
 
+/**
+ * RequestTest
+ */
 class RequestTest extends TestCase
 {
-
     use Request;
-
 
     public function testClearOptions()
     {
@@ -23,7 +24,6 @@ class RequestTest extends TestCase
         $this->clearOptions();
         $this->assertSame([], $this->options);
     }//end testClearOptions()
-
 
     public function testHasOption()
     {
@@ -33,7 +33,6 @@ class RequestTest extends TestCase
         $this->assertFalse($this->hasOption('c'));
     }//end testHasOptions()
 
-
     public function testRemoveOption()
     {
         $this->options = ['a' => 1, 'b' => 2, 'c' => 3, 'd' => 4];
@@ -41,14 +40,12 @@ class RequestTest extends TestCase
         $this->assertSame(['b' => 2, 'c' => 3, 'd' => 4], $this->options);
     }//end testRemoveOption()
 
-
     public function testGetOption()
     {
         $this->options = ['p' => 'v', 'a' => 'b'];
         $this->assertSame('v', $this->option('p'));
         $this->assertSame('b', $this->option('a'));
     }//end testGetOptions()
-
 
     public function testSetOption()
     {
@@ -58,14 +55,12 @@ class RequestTest extends TestCase
         $this->assertSame('d', $this->option('a'));
     }//end testSetOptions()
 
-
     public function testGetOptions()
     {
         $expected = ['p' => 'v', 'a' => 'b'];
         $this->options = $expected;
         $this->assertSame($expected, $this->options());
     }//end testGetOptions()
-
 
     public function testSetOptions()
     {
@@ -94,7 +89,6 @@ class RequestTest extends TestCase
         $this->assertSame($start, $this->options($merger, true));
         $this->assertSame($final, $this->options());
     }//end testSetOptionsMerge()
-
 
     public function testOptionsToParameters()
     {
